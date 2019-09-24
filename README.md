@@ -6,7 +6,7 @@ This is just a draft project to ask help on making custom buttons in a map with 
 
 `> npm install ol`
 
-In order to execute the code type in the master directory:
+In order to execute the code type in cmd of the master directory:
 
 `> ionic serve`
 
