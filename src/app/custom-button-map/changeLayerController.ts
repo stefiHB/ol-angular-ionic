@@ -1,38 +1,44 @@
-import {defaults as defaultControls, Control} from 'ol/control.js';
+import {Control} from 'ol/control.js';
 import {Renderer2} from '@angular/core';
 
 export class ChangeLayerController extends Control {
   options: any;
   button: Element;
   myElement: Element;
+  isOpen = false;
 
   constructor(private renderer: Renderer2, private optOptions?: any) {
     super(optOptions);
-    this.options = optOptions || {};
 
-    const ionicIcon = renderer.createElement('ion-icon');
-    // ICONS: albums, logo-buffer, map
+    this.options = this.optOptions || {};
+
+    const ionicIcon = this.renderer.createElement('ion-icon');
     ionicIcon.name = 'logo-buffer';
 
-    this.button = renderer.createElement('button');
+    this.button = this.renderer.createElement('button');
     this.button.className = 'btn-sty';
-    renderer.appendChild(this.button, ionicIcon);
+    this.renderer.appendChild(this.button, ionicIcon);
 
-    this.myElement = renderer.createElement('div');
+    this.myElement = this.renderer.createElement('div');
     this.myElement.className = 'change-layer ol-unselectable ol-control';
-    renderer.appendChild(this.myElement, this.button);
-
-
+    this.renderer.appendChild(this.myElement, this.button);
 
     Control.call(this, {
       element: this.myElement
     });
 
     this.button.addEventListener('click', this.presentLayers);
+    console.log(this.renderer);
+
   }
 
+
   presentLayers() {
+    this.isOpen = !this.isOpen;
+    console.log(this.isOpen);
+
     console.log('this is test');
+    console.log(this.renderer);
 
   }
 

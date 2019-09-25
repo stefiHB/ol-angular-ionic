@@ -1,4 +1,5 @@
-import {Component} from '@angular/core';
+import {Component, Renderer2} from '@angular/core';
+import {MyMap} from './myMap';
 
 @Component({
   selector: 'app-home',
@@ -7,7 +8,17 @@ import {Component} from '@angular/core';
 })
 export class HomePage {
 
-  constructor() {
+  constructor(private renderer: Renderer2) {
+
+    const container = renderer.createElement('div');
+
+    const button = renderer.createElement('button');
+    button.className = 'choose-opts';
+    button.innerHTML = 'Options';
+    console.log(container);
+
+    renderer.appendChild(container, button);
+    const myMap = new MyMap();
   }
 
 }
