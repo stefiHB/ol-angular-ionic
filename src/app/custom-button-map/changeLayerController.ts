@@ -3,28 +3,37 @@ import {Renderer2} from '@angular/core';
 
 export class ChangeLayerController extends Control {
   options: any;
+  button: Element;
+  myElement: Element;
 
-  constructor(renderer: Renderer2, optOptions?: any) {
+  constructor(private renderer: Renderer2, private optOptions?: any) {
     super(optOptions);
     this.options = optOptions || {};
 
-    const button = renderer.createElement('button');
-    button.className = 'btn-sty';
-    button.innerHTML = 'L';
+    const ionicIcon = renderer.createElement('ion-icon');
+    // ICONS: albums, logo-buffer, map
+    ionicIcon.name = 'logo-buffer';
 
-    const myElement = renderer.createElement('div');
-    myElement.className = 'rotate-north ol-unselectable ol-control';
-    renderer.appendChild(myElement, button);
+    this.button = renderer.createElement('button');
+    this.button.className = 'btn-sty';
+    renderer.appendChild(this.button, ionicIcon);
+
+    this.myElement = renderer.createElement('div');
+    this.myElement.className = 'change-layer ol-unselectable ol-control';
+    renderer.appendChild(this.myElement, this.button);
+
+
 
     Control.call(this, {
-      element: myElement
+      element: this.myElement
     });
 
-    button.addEventListener('click', this.testMe);
+    this.button.addEventListener('click', this.presentLayers);
   }
 
-  testMe() {
+  presentLayers() {
     console.log('this is test');
+
   }
 
 }
