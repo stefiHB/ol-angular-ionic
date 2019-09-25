@@ -51,10 +51,15 @@ export class CustomButtonMapPage implements OnInit {
       zoom: 9
     });
 
+    const myElement = document.createElement('div');
+    myElement.className = 'rotate-north ol-unselectable ol-control';
+
     this.map = new Map({
       target: 'map',
       controls: defaultControls().extend([
-        new ChangeLayerController(this.renderer)
+        new ChangeLayerController(this.renderer, {
+          element: myElement
+        })
       ]),
       layers: [
           this.layerOSM
