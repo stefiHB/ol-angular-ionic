@@ -27,6 +27,7 @@ export class CustomButtonMapPage implements OnInit {
   map: Map;
   source: XYZ;
   view: View;
+  changeLayerCtrl: ChangeLayerController;
 
   // default coordinates
   private latitude = 34.5079896;
@@ -52,20 +53,20 @@ export class CustomButtonMapPage implements OnInit {
     });
 
     const myElement = document.createElement('div');
-    myElement.className = 'rotate-north ol-unselectable ol-control';
+    myElement.className = 'change-layer ol-unselectable ol-control';
 
+    this.changeLayerCtrl = new ChangeLayerController(
+      this.renderer, {
+        element: myElement
+      });
     this.map = new Map({
       target: 'map',
-      controls: defaultControls().extend([
-        new ChangeLayerController(this.renderer, {
-          element: myElement
-        })
-      ]),
       layers: [
           this.layerOSM
         ],
       view: this.view,
     });
+    this.map.addControl(this.changeLayerCtrl);
   }
 
 }

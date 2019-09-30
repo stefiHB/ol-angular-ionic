@@ -8,9 +8,9 @@ export class ChangeLayerController extends Control {
   isOpen = false;
 
   constructor(private renderer: Renderer2, private optOptions?: any) {
-    super(optOptions);
+    super({});
 
-    this.options = this.optOptions || {};
+    // this.options = this.optOptions || {};
 
     const ionicIcon = this.renderer.createElement('ion-icon');
     ionicIcon.name = 'logo-buffer';
@@ -27,19 +27,17 @@ export class ChangeLayerController extends Control {
       element: this.myElement
     });
 
-    this.button.addEventListener('click', this.presentLayers);
+    this.button.addEventListener('click', () => this.presentLayers());
     console.log(this.renderer);
 
   }
 
 
   presentLayers() {
-    this.isOpen = !this.isOpen;
     console.log(this.isOpen);
-
-    console.log('this is test');
-    console.log(this.renderer);
-
+    this.isOpen = !this.isOpen;
   }
+
+
 
 }

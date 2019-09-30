@@ -7,6 +7,7 @@ import {MyMap} from './myMap';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
+  myMap: MyMap;
 
   constructor(private renderer: Renderer2) {
 
@@ -18,7 +19,11 @@ export class HomePage {
     console.log(container);
 
     renderer.appendChild(container, button);
-    const myMap = new MyMap();
+    this.myMap = new MyMap();
+  }
+
+  printName() {
+    this.myMap.presentName();
   }
 
 }
