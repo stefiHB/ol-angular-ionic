@@ -89,7 +89,7 @@ export class ChangeLayerController extends Control {
       btnOSM.addEventListener('click', () => this.changeLayer(customMapLayers.osm));
 
       const subscription = this.testObs.fromEvent(btnPWD, 'click')
-        .subscribe(() => console.log('patata?'));
+        .subscribe((e) => console.log('patata?', e));
 
       // Add the buttons to the controls of the map
       this.renderer.appendChild(this.myElement, btnPWD);
