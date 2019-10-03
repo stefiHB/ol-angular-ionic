@@ -6,11 +6,9 @@ import View from 'ol/View.js';
 import OSM from 'ol/source/OSM.js';
 
 import {fromLonLat, toLonLat} from 'ol/proj';
-import TileWMS from 'ol/source/TileWMS';
 
-import {defaults as defaultControls, Control} from 'ol/control.js';
-import Group from 'ol/layer/Group';
 import {ChangeLayerController} from './changeLayerController';
+import {customMapLayers} from '../shared/myEnums';
 
 
 @Component({
@@ -24,6 +22,7 @@ export class CustomButtonMapPage implements OnInit {
   // MAP declaration
   layerPWD: TileLayer;
   layerOSM: TileLayer;
+
   map: Map;
   source: XYZ;
   view: View;
@@ -67,6 +66,20 @@ export class CustomButtonMapPage implements OnInit {
       view: this.view,
     });
     this.map.addControl(this.changeLayerCtrl);
+  }
+
+  changeLayer(layer: customMapLayers) {
+    switch (layer) {
+      case customMapLayers.osm: {
+        console.log('switch pwd');
+        break;
+      }
+      case customMapLayers.pwd: {
+        console.log('switch pwd');
+        break;
+      }
+
+    }
   }
 
 }
