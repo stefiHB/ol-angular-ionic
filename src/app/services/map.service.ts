@@ -1,17 +1,24 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {customMapLayers} from '../shared/myEnums';
-import {Observable, of} from 'rxjs';
+import {BehaviorSubject} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MapService {
-  currentLayer: customMapLayers.pwd;
+
+  // tslint:disable-next-line:variable-name
+  private layer = new BehaviorSubject<customMapLayers>(customMapLayers.pwd);
 
   constructor() { }
 
-  getCurrentLayer(): Observable<customMapLayers> {
-    return of(this.currentLayer);
+
+  getLayer() {
+    return this.layer.asObservable();
   }
 
+  setLayer(mapLayer: customMapLayers) {
+    this.layer.next(mapLayer);
+    console.log('Setting new value...', this.layer.value);
+  }
 }

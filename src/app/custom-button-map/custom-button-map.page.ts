@@ -9,6 +9,8 @@ import {fromLonLat, toLonLat} from 'ol/proj';
 
 import {ChangeLayerController} from './changeLayerController';
 import {customMapLayers} from '../shared/myEnums';
+import {MapService} from '../services/map.service';
+import {Subscription} from 'rxjs';
 
 
 @Component({
@@ -17,7 +19,6 @@ import {customMapLayers} from '../shared/myEnums';
   styleUrls: ['./custom-button-map.page.scss'],
 })
 export class CustomButtonMapPage implements OnInit {
-
 
   // MAP declaration
   layerPWD: TileLayer;
@@ -32,7 +33,24 @@ export class CustomButtonMapPage implements OnInit {
   private latitude = 34.5079896;
   private longitude = 32.2554884;
 
-  constructor(private renderer: Renderer2) { }
+  private mapSub: Subscription;
+
+  // Default map Layer
+  private selectedLayer;
+
+
+  constructor(private renderer: Renderer2,
+              private mapService: MapService) {
+    this.mapSub = this.mapService.getLayer().subscribe(
+      l => {
+        console.log('Getting layer...', l);
+        if (l) {
+          this.selectedLayer = l;
+          this.changeLayer();
+        }
+      }
+    );
+  }
 
   ngOnInit() {
 
@@ -58,6 +76,7 @@ export class CustomButtonMapPage implements OnInit {
       this.renderer, {
         element: myElement
       });
+
     this.map = new Map({
       target: 'map',
       layers: [
@@ -68,8 +87,10 @@ export class CustomButtonMapPage implements OnInit {
     this.map.addControl(this.changeLayerCtrl);
   }
 
-  changeLayer(layer: customMapLayers) {
-    switch (layer) {
+  changeLayer() {
+
+    console.log('Changing Layer');
+    switch (this.selectedLayer) {
       case customMapLayers.osm: {
         console.log('switch pwd');
         break;

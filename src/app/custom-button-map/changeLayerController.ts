@@ -4,7 +4,6 @@ import {MapService} from '../services/map.service';
 import {customMapLayers} from '../shared/myEnums';
 import {CustomButtonMapPage} from './custom-button-map.page';
 import {Observable} from 'rxjs';
-import {TestObservables} from './testObservables';
 
 export class ChangeLayerController extends Control {
   options: any;
@@ -13,17 +12,17 @@ export class ChangeLayerController extends Control {
   isOpen = false;
 
   private mapService: MapService;
-  private customBtn: CustomButtonMapPage;
   currentLayer: customMapLayers;
-
-  testObs: TestObservables;
 
   constructor(private renderer: Renderer2, private optOptions?: any) {
     super({});
     this.options = optOptions || {};
 
+    // Initialize the map service
+    this.mapService = new MapService();
+
+    // CREATION OF THE CUSTOM BUTTON OF CHANGING LAYERS
     const ionicIcon = renderer.createElement('ion-icon');
-    // ICONS: albums, logo-buffer, map
     ionicIcon.name = 'logo-buffer';
 
     this.button = renderer.createElement('button');
@@ -38,11 +37,7 @@ export class ChangeLayerController extends Control {
     Control.call(this, {
       element: this.myElement
     });
-
-    // Initialize the map service
-    this.mapService = new MapService();
-    this.customBtn = new CustomButtonMapPage(null);
-    this.testObs = new TestObservables();
+    // -- END OF CREATION
 
 
   }
@@ -88,9 +83,6 @@ export class ChangeLayerController extends Control {
       btnPWD.addEventListener('click', () => this.changeLayer(customMapLayers.pwd));
       btnOSM.addEventListener('click', () => this.changeLayer(customMapLayers.osm));
 
-      const subscription = this.testObs.fromEvent(btnPWD, 'click')
-        .subscribe((e) => console.log('patata?', e));
-
       // Add the buttons to the controls of the map
       this.renderer.appendChild(this.myElement, btnPWD);
       this.renderer.appendChild(this.myElement, btnOSM);
@@ -102,9 +94,9 @@ export class ChangeLayerController extends Control {
   }
 
   changeLayer(layer: customMapLayers) {
-    this.testObs.sub();
-
+    this.mapService.setLayer(layer);
     this.currentLayer = layer;
+    console.log('Request for Changing layer...');
 
   }
 
